@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Zawadi Haven</title>
+    <meta name="description" content="Browse our collection of premium ladies' fashion at Zawadi Haven. Dresses, accessories, bags and more at affordable Kenyan prices.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsiveness.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="js/form-validation.js"></script>
+    <style>
+        /* Products page specific styles */
+        .products-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .products-hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .products-section {
+            padding: 80px 0;
+        }
+        
+        .products-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            background-color: var(--light-color);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sort-options select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .old-price {
+            text-decoration: line-through;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .add-to-cart:hover {
+            background-color: #c08d5a;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 10px;
+        }
+        
+        .pagination a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: var(--text-color);
+            border: 1px solid #ddd;
+            transition: var(--transition);
+        }
+        
+        .pagination a.active,
+        .pagination a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .products-filter {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .products-hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        <p>🛍️ New arrivals added daily! | Free returns within 14 days</p>
+    </div>
+
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Zawadi Haven</h1>
+                <p>Elegance Redefined</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html" class="active">Shop</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a></li>
+                </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Products Hero -->
+    <section class="products-hero">
+        <div class="container products-hero-content">
+            <h1>Our Collection</h1>
+            <p>Discover pieces that speak to your unique style</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-filter">
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">All Products</button>
+                    <button class="filter-btn" data-filter="dresses">Dresses</button>
+                    <button class="filter-btn" data-filter="accessories">Accessories</button>
+                    <button class="filter-btn" data-filter="bags">Bags</button>
+                </div>
+                <div class="sort-options">
+                    <label for="sort">Sort by:</label>
+                    <select id="sort">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid">
+                <!-- Dress 1 -->
+                <div class="product-card" data-category="dresses" data-id="1" data-price="2499">
+                    <div class="product-badge">New</div>
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" alt="Floral Maxi Dress">
+                    <div class="product-info">
+                        <h3>Floral Maxi Dress</h3>
+                        <p class="price">KSh 2,499</p>
+                        <button class="add-to-cart" data-id="1" data-name="Floral Maxi Dress" data-price="2499">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Dress 2 -->
+                <div class="product-card" data-category="dresses" data-id="4" data-price="2199">
+                    <img src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1373&q=80" alt="Wrap Midi Dress">
+                    <div class="product-info">
+                        <h3>Wrap Midi Dress</h3>
+                        <p class="price">KSh 2,199</p>
+                        <button class="add-to-cart" data-id="4" data-name="Wrap Midi Dress" data-price="2199">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Dress 3 -->
+                <div class="product-card" data-category="dresses" data-id="5" data-price="2799">
+                    <div class="product-badge">Bestseller</div>
+                    <img src="https://images.unsplash.com/photo-1595341595379-cf0f0a13c3a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Denim Shirt Dress">
+                    <div class="product-info">
+                        <h3>Denim Shirt Dress</h3>
+                        <p class="price">KSh 2,799</p>
+                        <button class="add-to-cart" data-id="5" data-name="Denim Shirt Dress" data-price="2799">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Accessory 1 -->
+                <div class="product-card" data-category="accessories" data-id="6" data-price="1299">
+                    <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80" alt="Gold Hoop Earrings">
+                    <div class="product-info">
+                        <h3>Gold Hoop Earrings</h3>
+                        <p class="price">KSh 1,299</p>
+                        <button class="add-to-cart" data-id="6" data-name="Gold Hoop Earrings" data-price="1299">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Accessory 2 -->
+                <div class="product-card" data-category="accessories" data-id="7" data-price="1899">
+                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Pearl Statement Necklace">
+                    <div class="product-info">
+                        <h3>Pearl Statement Necklace</h3>
+                        <p class="price">KSh 1,899</p>
+                        <button class="add-to-cart" data-id="7" data-name="Pearl Statement Necklace" data-price="1899">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Accessory 3 -->
+                <div class="product-card" data-category="accessories" data-id="8" data-price="999">
+                    <div class="product-badge">Sale</div>
+                    <img src="https://images.unsplash.com/photo-1591348122449-02525d70379b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Silk Printed Scarf">
+                    <div class="product-info">
+                        <h3>Silk Printed Scarf</h3>
+                        <p class="price"><span class="old-price">KSh 1,499</span> KSh 999</p>
+                        <button class="add-to-cart" data-id="8" data-name="Silk Printed Scarf" data-price="999">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Bag 1 -->
+                <div class="product-card" data-category="bags" data-id="2" data-price="3299">
+                    <img src="https://images.unsplash.com/photo-1554342872-034a06541bad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Leather Crossbody Bag">
+                    <div class="product-info">
+                        <h3>Leather Crossbody Bag</h3>
+                        <p class="price">KSh 3,299</p>
+                        <button class="add-to-cart" data-id="2" data-name="Leather Crossbody Bag" data-price="3299">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Bag 2 -->
+                <div class="product-card" data-category="bags" data-id="9" data-price="2599">
+                    <div class="product-badge">Limited</div>
+                    <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=738&q=80" alt="Straw Tote Bag">
+                    <div class="product-info">
+                        <h3>Straw Tote Bag</h3>
+                        <p class="price">KSh 2,599</p>
+                        <button class="add-to-cart" data-id="9" data-name="Straw Tote Bag" data-price="2599">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Bag 3 -->
+                <div class="product-card" data-category="bags" data-id="10" data-price="1899">
+                    <img src="https://images.unsplash.com/photo-1591348278863-a8fb3887e2aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Evening Clutch">
+                    <div class="product-info">
+                        <h3>Evening Clutch</h3>
+                        <p class="price">KSh 1,899</p>
+                        <button class="add-to-cart" data-id="10" data-name="Evening Clutch" data-price="1899">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#" title="Next Page"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Join Our Newsletter</h2>
+                <p>Subscribe to get 10% off your first order and updates on new arrivals</p>
+                <form id="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Zawadi Haven</h3>
+                    <p>Redefining elegance with affordable luxury fashion for the modern Kenyan woman.</p>
+                    <div class="social-links">
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="cart.html">My Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> The Hub, Karen, Nairobi</li>
+                        <li><i class="fas fa-phone"></i> +254 700 123456</li>
+                        <li><i class="fas fa-envelope"></i> info@zawadihaven.co.ke</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Zawadi Haven. All rights reserved.</p>
+               
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Product filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const sortSelect = document.getElementById('sort');
+            
+            // Filter products
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    filterProducts(filterValue);
+                });
+            });
+            
+            // Sort products
+            if (sortSelect) {
+                sortSelect.addEventListener('change', function() {
+                    sortProducts(this.value);
+                });
+            }
+            
+            // Initialize cart count
+            updateCartCount();
+        });
+        
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+        
+        function sortProducts(criteria) {
+            const productsContainer = document.querySelector('.products-grid');
+            const products = Array.from(document.querySelectorAll('.product-card'));
+            
+            products.sort((a, b) => {
+                const priceA = parseInt(a.getAttribute('data-price'));
+                const priceB = parseInt(b.getAttribute('data-price'));
+                const idA = parseInt(a.getAttribute('data-id'));
+                const idB = parseInt(b.getAttribute('data-id'));
+                
+                switch(criteria) {
+                    case 'price-low':
+                        return priceA - priceB;
+                    case 'price-high':
+                        return priceB - priceA;
+                    case 'newest':
+                        // Assuming newer products have higher IDs
+                        return idB - idA;
+                    default:
+                        // Featured - keep original order
+                        return 0;
+                }
+            });
+            
+            // Re-append sorted products
+            products.forEach(product => {
+                productsContainer.appendChild(product);
+            });
+        }
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+    </script>
+</body>
+</html>
