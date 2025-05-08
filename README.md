@@ -143,14 +143,6 @@ function addToCart(id, name, price) {
 - Limited external dependencies for faster loading
 - Local storage instead of cookies for better performance
 
-## Deployment
-
-### GitHub Pages Deployment
-1. Push your code to a GitHub repository
-2. Go to Repository Settings > Pages
-3. Select "main" branch and root folder
-4. Save - your site will be live at `https://username.github.io/repository-name`
-
 
 
 ## Testing
@@ -203,4 +195,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Contact**: For any questions, please https://github.com/WinnieMwangi-dot
 
-**Live Demo**: [https://username.github.io/zawadi-haven](https://username.github.io/zawadi-haven)
+**Live Demo**: https://zawadihaven.netlify.app/
