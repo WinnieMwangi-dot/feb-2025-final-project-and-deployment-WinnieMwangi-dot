@@ -94,10 +94,7 @@ zawadi-haven/
 │   ├── main.js             # Shared functionality
 │   ├── cart.js             # Cart operations
 │   └── form-validation.js  # Form validation logic
-├── images/                 # Image assets
-│   ├── mpesa.png           # M-Pesa payment logo
-│   ├── visa.png            # Visa payment logo
-│   └── mastercard.png      # Mastercard payment logo
+├                        
 └── README.md               # Project documentation
 ```
 
