@@ -151,10 +151,7 @@ function addToCart(id, name, price) {
 3. Select "main" branch and root folder
 4. Save - your site will be live at `https://username.github.io/repository-name`
 
-### Alternative Deployment Options
-- **Netlify**: Drag-and-drop deployment
-- **Vercel**: Optimized for static sites
-- **Shared Hosting**: Upload via FTP/cPanel
+
 
 ## Testing
 
@@ -171,11 +168,6 @@ function addToCart(id, name, price) {
    - Navigation
    - Image loading
 
-### Recommended Tests Before Deployment
-- [ ] Verify all links work properly
-- [ ] Test form submissions
-- [ ] Check cart persistence across pages
-- [ ] Validate responsive behavior
 
 ## Future Improvements
 
